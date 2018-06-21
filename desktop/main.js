@@ -48,8 +48,13 @@ try {
 } catch (e) {
     console.error('Error reading user file version', e); // eslint-disable-line no-console
 }
-const entryPointFile = path.join(entryPointDir, 'app.js');
-require(entryPointFile);
+
+//  let webpack recognize the './app.js'.
+if (entryPointDir === __dirname) {
+    require('./app.js');
+} else {
+    require(path.join(entryPointDir, 'app.js'));
+}
 
 function validateSignature(appPath) {
     const signatures = JSON.parse(fs.readFileSync(path.join(appPath, 'signatures.json')));
