@@ -24,6 +24,7 @@
     "css-loader": "^0.28.11",
     "cssnano": "3.10.0",
     "electron": "^1.7.9",
+    "electron-builder": "^20.16.4",
     "eslint": "^3.19.0",
     "eslint-config-standard": "10.2.1",
     "eslint-loader": "^2.0.0",
@@ -97,7 +98,7 @@
   "scripts": {
     "start": "grunt",
     "test": "grunt test",
-    "postinstall": "cd desktop && npm install",
+    "postinstall": "cd desktop && $npm_execpath install",
     "build-beta": "grunt --skip-sign --beta && sed 's/<html manifest=\"manifest.appcache\">//' dist/index.html > ../keeweb-beta/index.html && cd ../keeweb-beta && git add index.html && git commit -a -m 'beta' && git push origin master",
     "electron": "electron dist/app",
     "electron:server": "electron dist/app --htmlpath=http://localhost:8085/",
@@ -120,7 +121,10 @@
     "clean": "rimraf -r dist",
     "clean:app": "rimraf -r dist/app",
     "clean:build": "rimraf -r dist/build",
-    "clean:release": "rimraf -r dist/release"
+    "clean:release": "rimraf -r dist/release",
+    "builder:dir": "electron-builder --dir",
+    "builder": "electron-builder",
+    "builder:all": "$npm_execpath run clean && $npm_execpath run webpack:desktop && $npm_execpath run builder"
   },
   "author": {
     "name": "Antelle",

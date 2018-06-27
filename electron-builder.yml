@@ -1,0 +1,61 @@
+appId: net.antelle.keeweb
+productName: KeeWeb
+
+asar: true
+
+artifactName: "${productName}-${version}.${os}.${arch}.${ext}"
+
+directories:
+    buildResources: dist/assets
+    app: dist/app
+    output: dist/release
+
+mac:
+    artifactName: "${productName}-${version}.${os}.${ext}"
+    category: public.app-category.productivity
+    target: dmg
+    extendInfo: package/osx/extend.plist
+    icon: graphics/icon.icns
+
+dmg:
+    background: graphics/background.png
+    iconSize: 80
+    window:
+        width: 658
+        height: 498
+    contents:
+        - type: link
+          path: /Applications
+          x: 438
+          y: 344
+        - x: 192
+          y: 344
+
+win:
+    target:
+        - target: nsis
+          arch: ['x64', 'ia32']
+        - target: zip
+          arch: ['x64', 'ia32']
+    icon: graphics/icon.ico
+
+nsis:
+    artifactName: "${productName}-${version}.${os}-${arch}.${ext}"
+
+linux:
+    target:
+        - target: deb
+          arch: ['x64', 'ia32']
+        - target: zip
+          arch: ['x64', 'ia32']
+        - target: snap
+        - target: AppImage
+    category: GTK;GNOME;Utility
+
+deb:
+    depends: ['libappindicator1', 'libgconf2-4', 'libgtk2.0-dev']
+
+publish:
+    provider: github
+    owner: twang2218
+    repo: keeweb
